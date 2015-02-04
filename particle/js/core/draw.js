@@ -23,14 +23,20 @@
 		/*
 			================== Public Functions =====================
 		*/ 
-		
+
 		/*
 			Clear the context with the specific fill style
 		*/
 
-		var clear  = function(ctx){
+		var clear  = function(ctx, transparent){
 			ctx.fillStyle = "#5E3F6B";
-			ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+			if(transparent){
+				ctx.clearRect( 0 , 0 , ctx.canvas.width, ctx.canvas.height );
+			}
+			else{
+				ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+			}
 		};
 
 		/*

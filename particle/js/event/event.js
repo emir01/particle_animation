@@ -5,7 +5,6 @@
 	*/
 	particle.event = function(){
 
-
 		/* 	
 			Properties
 			--------------------------------
@@ -30,11 +29,11 @@
 			console.log("Setup Event");
 
 			// register click event
-			$(game.canvas).on('click', clickEventHandler)
+			$(game.evnt_canvas).on('click', clickEventHandler)
 
-			$(game.canvas).on('mousedown', startMouseDownEventHandler);
-			$(game.canvas).on('mouseup', endMouseDownEventHandler);
-			$(game.canvas).on('mousemove', mouseMoveEventHandler);
+			$(game.evnt_canvas).on('mousedown', startMouseDownEventHandler);
+			$(game.evnt_canvas).on('mouseup', endMouseDownEventHandler);
+			$(game.evnt_canvas).on('mousemove', mouseMoveEventHandler);
 		}
 
 		/* 	
@@ -51,19 +50,6 @@
 
 		var startMouseDownEventHandler = function(){
 			mouseIsDown = true;
-
-			// set a timeout event that will fire every
-			// x interval number of seconds and add a mouse down event
-			// to the queue
-
-			var md_interval = setInterval(function(){
-				if(mouseIsDown){
-					// need to get mouse position on canvas
-				}
-				else{
-					window.clearInterval(md_interval);
-				}
-			}, mouseDownFireInterval);
 		};
 
 		var endMouseDownEventHandler = function(){
@@ -71,7 +57,6 @@
 		};
 
 		var mouseMoveEventHandler = function(event){
-			// only add event when the mouse is down
 			if(mouseIsDown){
 				 eventQueue.push({
 			 		eventType:'mousemove',
@@ -86,11 +71,7 @@
 		*/
 
 		var clickEventHandler = function(event){
-			console.log('click event handler');
-
-			 // tell all subs about event ?
-
-			 eventQueue.push({
+			eventQueue.push({
 			 	eventType:'click',
 			 	event:event
 			 });

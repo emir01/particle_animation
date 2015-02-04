@@ -7,23 +7,56 @@
 
 		<style type="text/css">
 		
-		#canvas{
+		.surface_canvas{
 			display: block;
 			width:1000px;
 			height: 800px;
 
-			position: relative;
+			position: absolute;
 
 			margin:0px auto;
+		}
+
+		#event_canvas{
+			z-index: 3;
+		}
+
+		#animation_canvas{
+			z-index: 2;
+		}
+
+		#draw_canvas{
+			z-index: 1;
+		}
+
+		#background_canvas{
+			z-index: 0;
 		}
 
 		</style>
 
 	</head>
 		<body>
-		 <canvas id="canvas" width="1000" height="800">
 
-		</canvas>
+		<canvas id="event_canvas" 
+		  class="surface_canvas" 
+		  width="1000" height="800">
+		 </canvas>
+
+		 <canvas id="animation_canvas" 
+		  class="surface_canvas" 
+		  width="1000" height="800">
+		 </canvas>
+
+		 <canvas id="draw_canvas"
+		 class="surface_canvas"  
+		 width="1000" height="800">
+		 </canvas>
+
+		 <canvas id="background_canvas" 
+		 class="surface_canvas"  
+		 width="1000" height="800">
+		 </canvas>
 
 		<!-- lib -->
 
@@ -33,9 +66,8 @@
 		<script type="text/javascript" src="js/core/draw.js"></script>
 		
 		<script type="text/javascript" src="js/event/event.js"></script>
+		
 		<script type="text/javascript" src="js/engine/engine.js"></script>
-
-		<script type="text/javascript" src="js/core/test.js"></script>
 		<script type="text/javascript" src="js/core/main.js"></script>
  
 	</body>
