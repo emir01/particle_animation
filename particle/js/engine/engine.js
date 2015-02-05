@@ -46,18 +46,10 @@
 					// animation frames is rudimentary system for particle
 					// animation timings
 					if(e.animationFrames > 0){
-						e.y = e.y-2;
-
-						e.x = e.x+2;
-
-						e.animationFrames = e.animationFrames - 1;
-
-						if(e.animationFrames <= 0){
-							e.isAnimating = false;
-						}
+						e.animationFunction(e);
 					}
 				}
-			};
+			}
 		}
 
 		var updateProcessEvents = function(){
@@ -177,7 +169,19 @@
 				remove:true,
 
 				isAnimating:true,
-				animationFrames:20,
+				animationFrames:10,
+
+				animationFunction:function(me){
+					me.y = me.y+0.2;
+
+					me.x = me.x-0.1;
+
+					me.animationFrames = me.animationFrames - 1;
+
+					if(me.animationFrames <= 0){
+						me.isAnimating = false;
+					}
+				}
 			};
 
 			return entity;

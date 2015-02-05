@@ -29,7 +29,7 @@
 		*/
 
 		var clear  = function(ctx, transparent){
-			ctx.fillStyle = "#5E3F6B";
+			ctx.fillStyle = "#ccc873";
 
 			if(transparent){
 				ctx.clearRect( 0 , 0 , ctx.canvas.width, ctx.canvas.height );
