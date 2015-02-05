@@ -35,6 +35,7 @@
 
 		var update = function(){
 			animateBrushStrokes();
+
 			updateProcessEvents();
 		};
 
@@ -72,10 +73,12 @@
 		};
 
 		var handleClickOnCanvas = function(event){
-			// get the current stroke components and add them to entities
-			// to be drawn
-			var strokeComponents = getBaseBrushStroke(event);
-			entities = entities.concat(strokeComponents);
+			// get the active brush and get the brush stroke
+			// and add the brush components to the entities to be drawn
+			var activeBrush = particle.brushManager.GetActiveBrush()
+			var stroke = activeBrush.GetsBrushStroke(event);
+
+			entities = entities.concat(stroke.components);
 		};
 
 		/*
@@ -108,83 +111,6 @@
 					entities.splice(i,1);
 				}
 			};
-		};
-
-		/*
-			============================================================
-			Utilities
-			============================================================
-		*/
-
-		/*
-			Return a collection of "stuff" to draw as part of the current brush stroke.
-
-			Params:
-			event - the event 
-		*/
-
-		var getBaseBrushStroke  = function(event){
-			var strokeComponents = [];
-
-			var strokeCore = getBrushComponent(event)
-			var strokeAddonOne = getBrushComponent(event);
-			var strokeAddonTwo = getBrushComponent(event);
-
-			strokeAddonOne.y = strokeCore.y+2;
-			strokeAddonOne.x = strokeCore.x+2;
-
-			strokeAddonTwo.y = strokeCore.y-2;
-			strokeAddonTwo.x = strokeCore.x-2;
-
-			// the stroke core will not be animated
-			strokeCore.isAnimating = false;
-
-			strokeComponents.push(strokeCore);
-			strokeComponents.push(strokeAddonOne);
-			strokeComponents.push(strokeAddonTwo);
-
-			return strokeComponents;
-		};
-		
-		/*
-			Return a drawable entity from an event. (Event for positioning)
-		*/
-
-		var getBrushComponent = function(event){
-			var invoke = "Rect";
-
-			if(Math.random() < 0.9){
-				invoke = "Circle";
-			}
-
-			// randomize the method invocation
-			var entity = {
-				type:"brushComponent",
-				x:event.event.offsetX, // the wrong coordinates
-				y:event.event.offsetY,
-				w:Math.round(Math.random() * 5),
-				h:Math.round(Math.random() * 5),
-				fillStyle:'#'+(Math.random()*0xFFFFFF<<0).toString(16),
-				invoke:invoke,
-				remove:true,
-
-				isAnimating:true,
-				animationFrames:10,
-
-				animationFunction:function(me){
-					me.y = me.y+0.2;
-
-					me.x = me.x-0.1;
-
-					me.animationFrames = me.animationFrames - 1;
-
-					if(me.animationFrames <= 0){
-						me.isAnimating = false;
-					}
-				}
-			};
-
-			return entity;
 		};
 
 		/*

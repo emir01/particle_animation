@@ -37,6 +37,9 @@
 
 	// draw/clear initial background canvas
 	particle.draw.Clear(game.bctx);
+
+	// setup current brush
+	particle.brushManager.SetActiveBrush(particle.brushManager.BrushNames.color_splatter);
 	
 	particle.engine.run();
 
