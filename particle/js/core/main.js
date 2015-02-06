@@ -30,7 +30,7 @@
 	game.evnt_canvas = evnt_canvas;
 	game.ectx = ectx;
 
-	particle.event.setup(game);
+	particle.eventpooling.setup(game);
 
 	// namespace the core game object
 	particle.game = game;

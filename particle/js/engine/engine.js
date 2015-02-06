@@ -1,13 +1,40 @@
 (function(particle){
 	particle.engine = function(){
 
-		var entities = [];
+		/*
+			============================================================
+			Strokes
+			============================================================
+		*/
+
+		var strokes = [];
+
+		/*
+			============================================================
+			Main Engine Loop
+			============================================================
+		*/
 
 		var run = function(){
-			// run the loop
-
 			requestAnimFrame(run);
 
+			handleTimings();
+
+			// process events and update animations
+			update();
+
+			// run drawing code on the animation or draw canvases
+			// but first clear the animation canvas
+			particle.draw.Clear(particle.game.actx, true);
+
+			draw();
+		};
+
+		/*	
+			Handle Engine Timings constraints, for animation frequency
+		*/
+
+		var handleTimings = function(game) {
 			var game = particle.game;
 
 			var now = new Date().getTime();
@@ -17,78 +44,49 @@
 			if(game.dt > 1000){
 				game.dt = 1;
 			}
-
-			// process events and update animations
-			update();
-
-			// run drawing code on the animation or draw canvases
-			// but first clear the animation canvas
-			particle.draw.Clear(particle.game.actx, true);
-			draw();
-		}
+		};
 
 		/*
 			============================================================
-			Update And Methods
+			Update
 			============================================================
 		*/
 
 		var update = function(){
-			animateBrushStrokes();
-
-			processEventQueue();
+			particle.engine_animations.HandleAnimations(strokes);
+			particle.engine_eventprocessing.HandleEventProcessing(handleStrokeOnCanvas);
 		};
 
-		var animateBrushStrokes = function(){
-			for (var i = entities.length - 1; i >= 0; i--) {
-				var e = entities[i];
-
-				if(e.type="brushComponent" && e.isAnimating){
-					// animation frames is rudimentary system for particle
-					// animation timings
-					if(e.animationFrames > 0){
-						e.animationFunction(e);
-					}
-				}
-			}
-		}
-
-		var processEventQueue = function(){
-
-			while(particle.event.HasMoreEvents()){
-				var event = particle.event.GetNextEvent();
-
-				// process the event
-				if(event != null){
-					if(event.eventType == "click" || event.eventType == "mousemove"){
-						handleClickOnCanvas(event);
-					}
-				}
-
-				// release the event
-				particle.event.SetEventAsProcessed(event);
-			}
-		};
-
-		var handleClickOnCanvas = function(event){
+		var handleStrokeOnCanvas = function(event){
 			// get the active brush and get the brush stroke
-			// and add the brush components to the entities to be drawn
+			// and add the brush components to the strokes to be drawn
 			var activeBrush = particle.brushManager.GetActiveBrush()
+
 			var stroke = activeBrush.GetsBrushStroke(event);
 
-			entities = entities.concat(stroke.components);
+			// if the stroke is not composite add all the 
+			// internal components separatly
+			if(!stroke.IsComposite){
+				strokes = strokes.concat(stroke.components);
+			}
+			else{
+				// if the stroke is a composite add the entire stroke object 
+				// which provides the component based API for drawing and animation 
+				// and will internally manage its components
+				strokes = strokes.concat(stroke);
+			}
 		};
 
 		/*
 			============================================================
-			Draw methods
+			Draw
 			============================================================
 		*/
 
 		var draw = function(){
-			// draw  everything in entities
-			for (var i = entities.length - 1; i >= 0; i--) {
-				var e = entities[i];
+			//draw all current strokes
+			for (var i = strokes.length - 1; i >= 0; i--) {
+				var e = strokes[i];
 
 				var ctx = particle.game.dctx;
 
@@ -96,17 +94,12 @@
 					ctx = particle.game.actx;
 				}
 
-				if(e.invoke == "Rect"){
-					particle.draw.Rect(ctx, e.x, e.y, e.w, e.h, e.fillStyle)
-				}
-				else if (e.invoke == "Circle"){
-					particle.draw.Circle(ctx, e.x, e.y, e.w, e.fillStyle)
-				}
+				e.drawIt(ctx);
 
 				// the entity is going to be removed from the draw pool
 				// if its set to be removed and its not animating
-				if(e.remove && !e.isAnimating){
-					entities.splice(i,1);
+				if(e.removeFromStrokesAfterDraw && !e.isAnimating){
+					strokes.splice(i,1);
 				}
 			};
 		};

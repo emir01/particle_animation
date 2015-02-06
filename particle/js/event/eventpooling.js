@@ -1,9 +1,11 @@
+/*
+	Module responsible for setting up and pooling events in the event queue on the event canvas
+*/
 (function(particle){
-
 	/*
 		The main event module
 	*/
-	particle.event = function(){
+	particle.eventpooling = function(){
 
 		/* 	
 			Properties
@@ -25,8 +27,6 @@
 
 			//setup a pub sub event handling framework
 			// and register all valid game events
-
-			console.log("Setup Event");
 
 			// register click event
 			$(game.evnt_canvas).on('click', clickEventHandler)
@@ -117,7 +117,7 @@
 			// event queue operations
 			HasMoreEvents:hasMoreEvents,
 			GetNextEvent:getNextEvent,
-			SetEventAsProcessed:setProcessedEvent
+			SetEventAsProcessed:setEventAsProcessed
 		}
 	}();
 
