@@ -99,6 +99,7 @@
 				// the entity is going to be removed from the draw pool
 				// if its set to be removed and its not animating
 				if(e.removeFromStrokesAfterDraw && !e.isAnimating){
+					console.log("Splicing component");
 					strokes.splice(i,1);
 				}
 			};

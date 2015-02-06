@@ -18,7 +18,6 @@
 		getBrushStroke = function(event){
 			var brushStroke = {
 				components:[]
-
 			};
 
 			// get the base components

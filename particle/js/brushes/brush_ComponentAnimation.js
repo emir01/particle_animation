@@ -26,27 +26,30 @@
 				removeFromStrokesAfterDraw:true,
 
 				drawIt:function(ctx){
-					console.log("Composite Brush Draw It");
 					for (var i = this.components.length - 1; i >= 0; i--) {
 						var comp = this.components[i];
 						comp.drawIt(ctx);
 					};
-
 				},
 
 				animateIt:function(){
-					console.log("Composite Brush Animate It");
-					for (var i = this.components.length - 1; i >= 0; i--) {
-						var comp = this.components[i];
+					var comps = this.components;
 
+					for (var i = comps.length - 1; i >= 0; i--) {
+						var comp = comps[i];
 						if(comp.isAnimating){
 							comp.animateIt();
 						}
 					};
 
 					this.animationFrames = this.animationFrames - 1;
-					if(animationFrames<=0){
-						this.animateIt = false;
+
+					if(this.animationFrames<=0){
+						this.isAnimating = false;
+						
+						for (var j = comps.length - 1; j >= 0; j--) {
+							comps[j].isAnimating = false;
+						};
 					}
 				}
 			};
@@ -93,7 +96,7 @@
 			var component = {
 				type:"brushComponent",
 
-				x:event.event.offsetX, // the wrong coordinates
+				x:event.event.offsetX, 
 				y:event.event.offsetY,
 
 				w:Math.round(Math.random() * 5),
