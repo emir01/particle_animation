@@ -39,7 +39,7 @@
 	particle.draw.Clear(game.bctx);
 
 	// setup current brush
-	particle.brushManager.SetActiveBrush(particle.brushManager.BrushNames.color_splatter);
+	particle.brushManager.SetActiveBrush(particle.brushManager.BrushNames.component_animated);
 	
 	particle.engine.run();
 

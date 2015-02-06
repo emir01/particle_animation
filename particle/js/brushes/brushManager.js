@@ -13,7 +13,8 @@
 		var brushModules= [];
 
 		var predefBrushNames = {
-			color_splatter:"Color Splatter"
+			color_splatter:"Color Splatter",
+			component_animated:"Component Animated",
 		};
 
 		/*
