@@ -36,7 +36,7 @@
 		var update = function(){
 			animateBrushStrokes();
 
-			updateProcessEvents();
+			processEventQueue();
 		};
 
 		var animateBrushStrokes = function(){
@@ -53,22 +53,20 @@
 			}
 		}
 
-		var updateProcessEvents = function(){
+		var processEventQueue = function(){
 
 			while(particle.event.HasMoreEvents()){
 				var event = particle.event.GetNextEvent();
 
 				// process the event
 				if(event != null){
-					console.log("Processing event of type " +event.eventType);
-
 					if(event.eventType == "click" || event.eventType == "mousemove"){
 						handleClickOnCanvas(event);
 					}
 				}
 
 				// release the event
-				particle.event.SetProcessedEvent(event);
+				particle.event.SetEventAsProcessed(event);
 			}
 		};
 

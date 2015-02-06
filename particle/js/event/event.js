@@ -100,7 +100,7 @@
 			}
 		};
 
-		var setProcessedEvent = function(event){
+		var setEventAsProcessed = function(event){
 			var index = eventQueue.indexOf(event);
 			eventQueue.splice(index, 1);
 		};
@@ -117,7 +117,7 @@
 			// event queue operations
 			HasMoreEvents:hasMoreEvents,
 			GetNextEvent:getNextEvent,
-			SetProcessedEvent:setProcessedEvent
+			SetEventAsProcessed:setProcessedEvent
 		}
 	}();
 
