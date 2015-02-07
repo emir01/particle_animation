@@ -11,7 +11,7 @@
 
 		/*
 			============================================================
-			Main Engine Loop
+			Main Engine Loop and Entry Point
 			============================================================
 		*/
 
@@ -45,6 +45,30 @@
 				state.dt = 1;
 			}
 		};
+
+		/*
+			============================================================
+			Engine API 
+			============================================================
+		*/
+
+
+		/*	
+			Clear what has been drawn on the canvases and stop any drawing or animations
+			of strokes
+		*/
+
+		var clear = function(){
+			strokes = [];
+
+			// clear the animation canvas
+			drawing.draw.Clear(drawing.state.actx, true);
+
+			// clear the drawing canvas
+			drawing.draw.Clear(drawing.state.dctx, true);
+
+			// background canvas and event canvas are not cleared
+		}
 
 		/*
 			============================================================
@@ -112,7 +136,8 @@
 		*/
 
 		return{
-			run:run
+			run:run,
+			clear:clear
 		}
 	}();
 })(window.drawing = window.drawing || {} );

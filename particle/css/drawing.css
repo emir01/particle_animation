@@ -1,0 +1,61 @@
+#header{
+	margin-top:10px;
+	margin-bottom:10px;
+
+	border-bottom:2px dashed #CCC;
+}
+
+#canvas-wrapper{
+	position: relative;
+	width:800px	;
+	height: 800px;
+}
+
+	.surface_canvas{
+		display: block;
+		width:800px	;
+		height: 800px;
+		position: absolute;
+	}
+
+	#event_canvas{
+		z-index: 3;
+		cursor: crosshair;
+		position: fixed !important;
+	}
+
+	#animation_canvas{
+		z-index: 2;
+	}
+
+	#draw_canvas{
+		z-index: 1;
+	}
+
+	#background_canvas{
+		z-index: 0;
+	}
+
+#controls-wrapper{
+
+}
+	.controls-section{
+		border-bottom:1px dashed #CCC;
+		margin-top:5px;
+		margin-bottom:5px;
+	}
+		.section-title{
+			font-weight: bold;
+			margin-bottom:5px;
+		}
+
+		.control-section-actions{
+			margin-top:5px;
+			margin-bottom: 5px;
+		}
+			
+			.action{
+
+			}
+
+

@@ -41,6 +41,10 @@
 	// setup current brush
 	drawing.brushManager.SetActiveBrush(drawing.brushManager.BrushNames.component_animated);
 	
+	// hook up the UI
+	drawing.ui_core.InitUi();
+
 	drawing.engine.run();
+
 
 })(window.drawing = window.drawing || {});

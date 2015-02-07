@@ -3,81 +3,93 @@
 	<head>
 		<meta charset="UTF-8">
 
-		<title>Javascript Particles</title>
+		<title>Javascript Drawing</title>
 
-		<style type="text/css">
-		
-		.surface_canvas{
-			display: block;
-			width:1000px;
-			height: 800px;
-
-			position: absolute;
-
-			margin:0px auto;
-		}
-
-		#event_canvas{
-			z-index: 3;
-			cursor: crosshair;
-		}
-
-		#animation_canvas{
-			z-index: 2;
-		}
-
-		#draw_canvas{
-			z-index: 1;
-		}
-
-		#background_canvas{
-			z-index: 0;
-		}
-
-		</style>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" type="text/css" href="css/drawing.css">
 
 	</head>
-		<body>
+	
+	<body>
+		<div class="container">
+			<div id="header">
+				<h2>Canvas Drawing Engine </h2>
+			</div>
 
-		<canvas id="event_canvas" 
-		  class="surface_canvas" 
-		  width="1000" height="800">
-		 </canvas>
+			<div class="row">
+				<div class="col-xs-9">
+					<div id="canvas-wrapper">
+						<canvas id="event_canvas" 
+						  class="surface_canvas" 
+						  width="800" height="800">
+						 </canvas>
 
-		 <canvas id="animation_canvas" 
-		  class="surface_canvas" 
-		  width="1000" height="800">
-		 </canvas>
+						 <canvas id="animation_canvas" 
+						  class="surface_canvas" 
+						  width="800" height="800">
+						 </canvas>
 
-		 <canvas id="draw_canvas"
-		 class="surface_canvas"  
-		 width="1000" height="800">
-		 </canvas>
+						 <canvas id="draw_canvas"
+						 class="surface_canvas"  
+						 width="800" height="800">
+						 </canvas>
 
-		 <canvas id="background_canvas" 
-		 class="surface_canvas"  
-		 width="1000" height="800">
-		 </canvas>
+						 <canvas id="background_canvas" 
+						 class="surface_canvas"  
+						 width="800" height="800">
+						 </canvas>
+					</div>
+				</div>
 
-		<!-- Include all te library related scripts -->
-		<script type="text/javascript" src="js/lib/jquery-1.11.2.min.js"></script>
-		<script type="text/javascript" src="js/core/animation-api.js"></script>
-		<script type="text/javascript" src="js/core/draw.js"></script>
-		<script type="text/javascript" src="js/event/eventpooling.js"></script>
+				<div class="col-xs-3">
+					<div id="controls-wrapper">
+		 				<div class="controls-section">
+		 					
+		 					<span class="section-title">Main:</span>
 
-		<!-- load all brushes and the brush manager -->
-		<script type="text/javascript" src="js/brushes/brushManager.js"></script>
-		<script type="text/javascript" src="js/brushes/brush_ColorSplatter.js"></script>
-		<script type="text/javascript" src="js/brushes/brush_ComponentAnimation.js"></script>
+		 					<div class="control-section-actions">
+		 						<button id="ui_action_clearCanvas" class="action"> Clear Canvas (1) </button>
+		 					</div>
+		 				</div>
 
-		<!-- Include all engine related scripts -->
-		<script type="text/javascript" src="js/engine/engine.animations.js"></script>
-		<script type="text/javascript" src="js/engine/engine.eventprocessing.js"></script>
+		 				<div class="controls-section">
+		 					<span class="section-title">Brushes:</span>
 
-		<script type="text/javascript" src="js/engine/engine.js"></script>
+		 					<div class="control-section-actions">
+		 						<button id="ui_action_brush_circles" class="action"> Circles Brush (2) </button>
 
-		<!-- Include the main startup scripts -->
-		<script type="text/javascript" src="js/core/main.js"></script>
- 
+		 						<button id="ui_action_brush_squares" class="action"> Squares Brush (3) </button>
+		 					</div>
+		 				</div>
+		 			</div>
+		 		</div>
+
+			</div>
+		</div>
 	</body>
+
+	<!-- Include all te library related scripts -->
+	<script type="text/javascript" src="js/lib/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="js/core/animation-api.js"></script>
+	<script type="text/javascript" src="js/core/draw.js"></script>
+	<script type="text/javascript" src="js/event/eventpooling.js"></script>
+
+	<!-- load all brushes and the brush manager -->
+	<script type="text/javascript" src="js/brushes/brushManager.js"></script>
+	<script type="text/javascript" src="js/brushes/brush_ColorSplatter.js"></script>
+	<script type="text/javascript" src="js/brushes/brush_ComponentAnimation.js"></script>
+
+	<!-- Include all engine related scripts -->
+	<script type="text/javascript" src="js/engine/engine.animations.js"></script>
+	<script type="text/javascript" src="js/engine/engine.eventprocessing.js"></script>
+
+	<script type="text/javascript" src="js/engine/engine.js"></script>
+
+	<!-- Load UI related Scripts -->
+	<script type="text/javascript" src="js/ui/ui.core.js"></script>
+
+	<!-- Include the main startup scripts -->
+	<script type="text/javascript" src="js/core/main.js"></script>
+
 </html>
