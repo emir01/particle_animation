@@ -1,4 +1,4 @@
-(function(particle){
+(function(drawing){
 
 	// Define the brush and register it via the burh collection
 	var brush = (function(){
@@ -93,10 +93,10 @@
 				drawIt:function(ctx){
 					var me = this;
 					if(me.invoke=="Rect"){
-						particle.draw.Rect(ctx, me.x, me.y, me.w, me.h, me.fillStyle)
+						drawing.draw.Rect(ctx, me.x, me.y, me.w, me.h, me.fillStyle)
 					}
 					else if(me.invoke == "Circle"){
-						particle.draw.Circle(ctx, me.x, me.y, me.w, me.fillStyle)
+						drawing.draw.Circle(ctx, me.x, me.y, me.w, me.fillStyle)
 					}
 				}
 			};
@@ -116,6 +116,6 @@
 	})();
 	
 	// register the brush with the brush collection
-	window.particle.brushManager.RegisterBrush(brush, brush.Name);
+	window.drawing.brushManager.RegisterBrush(brush, brush.Name);
 
-})(window.particle = window.particle || {} );
+})(window.drawing = window.drawing || {} );

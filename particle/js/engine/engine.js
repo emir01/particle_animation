@@ -1,5 +1,5 @@
-(function(particle){
-	particle.engine = function(){
+(function(drawing){
+	drawing.engine = function(){
 
 		/*
 			============================================================
@@ -25,7 +25,7 @@
 
 			// run drawing code on the animation or draw canvases
 			// but first clear the animation canvas
-			particle.draw.Clear(particle.game.actx, true);
+			drawing.draw.Clear(drawing.state.actx, true);
 
 			draw();
 		};
@@ -34,15 +34,15 @@
 			Handle Engine Timings constraints, for animation frequency
 		*/
 
-		var handleTimings = function(game) {
-			var game = particle.game;
+		var handleTimings = function(state) {
+			var state = drawing.state;
 
 			var now = new Date().getTime();
-			game.last = now;
-			game.dt = now - game.last;
+			state.last = now;
+			state.dt = now - state.last;
 			
-			if(game.dt > 1000){
-				game.dt = 1;
+			if(state.dt > 1000){
+				state.dt = 1;
 			}
 		};
 
@@ -53,14 +53,14 @@
 		*/
 
 		var update = function(){
-			particle.engine_animations.HandleAnimations(strokes);
-			particle.engine_eventprocessing.HandleEventProcessing(handleStrokeOnCanvas);
+			drawing.engine_animations.HandleAnimations(strokes);
+			drawing.engine_eventprocessing.HandleEventProcessing(handleStrokeOnCanvas);
 		};
 
 		var handleStrokeOnCanvas = function(event){
 			// get the active brush and get the brush stroke
 			// and add the brush components to the strokes to be drawn
-			var activeBrush = particle.brushManager.GetActiveBrush()
+			var activeBrush = drawing.brushManager.GetActiveBrush()
 
 			var stroke = activeBrush.GetsBrushStroke(event);
 
@@ -88,10 +88,10 @@
 			for (var i = strokes.length - 1; i >= 0; i--) {
 				var e = strokes[i];
 
-				var ctx = particle.game.dctx;
+				var ctx = drawing.state.dctx;
 
 				if(e.isAnimating){
-					ctx = particle.game.actx;
+					ctx = drawing.state.actx;
 				}
 
 				e.drawIt(ctx);
@@ -115,4 +115,4 @@
 			run:run
 		}
 	}();
-})(window.particle = window.particle || {} );
+})(window.drawing = window.drawing || {} );

@@ -1,6 +1,6 @@
-(function(particle){
+(function(drawing){
 
-	particle.engine_eventprocessing = function(){
+	drawing.engine_eventprocessing = function(){
 
 		/*
 			============================================================
@@ -9,8 +9,8 @@
 		*/
 
 		var handleEventProcessing = function(canvasStrokeHandler){
-			while(particle.eventpooling.HasMoreEvents()){
-				var event = particle.eventpooling.GetNextEvent();
+			while(drawing.eventpooling.HasMoreEvents()){
+				var event = drawing.eventpooling.GetNextEvent();
 
 				// process the event
 				if(event != null){
@@ -20,7 +20,7 @@
 				}
 
 				// release the event
-				particle.eventpooling.SetEventAsProcessed(event);
+				drawing.eventpooling.SetEventAsProcessed(event);
 			}
 		};
 
@@ -35,4 +35,4 @@
 
 		}
 	}();
-})(window.particle = window.particle || {} );
+})(window.drawing = window.drawing || {} );

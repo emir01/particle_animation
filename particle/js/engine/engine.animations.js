@@ -1,6 +1,6 @@
-(function(particle){
+(function(drawing){
 
-	particle.engine_animations = function(){
+	drawing.engine_animations = function(){
 
 		/*
 			============================================================
@@ -12,7 +12,7 @@
 				var e = strokes[i];
 
 				if(e.type="brushComponent" && e.isAnimating){
-					// animation frames is rudimentary system for particle
+					// animation frames is rudimentary system for drawing
 					// animation timings
 					if(e.animationFrames > 0){
 						e.animateIt();
@@ -31,4 +31,4 @@
 			HandleAnimations:handleAnimations
 		}
 	}();
-})(window.particle = window.particle || {} );
+})(window.drawing = window.drawing || {} );

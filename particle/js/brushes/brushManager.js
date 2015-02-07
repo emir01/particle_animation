@@ -1,6 +1,6 @@
-(function(particle){
+(function(drawing){
 
-	particle.brushManager = function(){
+	drawing.brushManager = function(){
 
 		/*
 			============================================================
@@ -73,4 +73,4 @@
 			GetActiveBrush:getActiveBrush,
 		}
 	}();
-})(window.particle = window.particle || {} );
+})(window.drawing = window.drawing || {} );

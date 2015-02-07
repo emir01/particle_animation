@@ -1,11 +1,11 @@
 /*
 	Module responsible for setting up and pooling events in the event queue on the event canvas
 */
-(function(particle){
+(function(drawing){
 	/*
 		The main event module
 	*/
-	particle.eventpooling = function(){
+	drawing.eventpooling = function(){
 
 		/* 	
 			Properties
@@ -23,17 +23,17 @@
 			--------------------------------
 		*/
 
-		var setup = function(game){
+		var setup = function(state){
 
 			//setup a pub sub event handling framework
-			// and register all valid game events
+			// and register all valid drawing events
 
 			// register click event
-			$(game.evnt_canvas).on('click', clickEventHandler)
+			$(state.evnt_canvas).on('click', clickEventHandler)
 
-			$(game.evnt_canvas).on('mousedown', startMouseDownEventHandler);
-			$(game.evnt_canvas).on('mouseup', endMouseDownEventHandler);
-			$(game.evnt_canvas).on('mousemove', mouseMoveEventHandler);
+			$(state.evnt_canvas).on('mousedown', startMouseDownEventHandler);
+			$(state.evnt_canvas).on('mouseup', endMouseDownEventHandler);
+			$(state.evnt_canvas).on('mousemove', mouseMoveEventHandler);
 		}
 
 		/* 	
@@ -122,4 +122,4 @@
 	}();
 
 
-})(window.particle = window.particle || {} );
+})(window.drawing = window.drawing || {} );

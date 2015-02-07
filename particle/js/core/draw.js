@@ -1,15 +1,12 @@
 /*
 	The draw module is responsible for abstracting canvas specific draw calls.
 
-	It is heavily used to hide way the drawing of the images for the major entities in the game
-	among which are the palyer, doodads and enemy ships.
-
-	Draw is probably the first written functionality besides initialization/testing/main game code
-	as it was initially used to test canvas interaction
+	Draw is probably the first written functionality besides initialization/testing/main drawing/engine code
+	as it was initially used to test canvas interaction.
 */
 
-(function(g){
-	g.draw = (function() {
+(function(drawing){
+	drawing.draw = (function() {
 		/*
 			 ===================== Properties =======================
 		*/
@@ -197,4 +194,4 @@
 			BoundingBox: drawBoundingBox
 		};
 	})();
-})(window.particle = window.particle || {});
+})(window.drawing = window.drawing || {});
