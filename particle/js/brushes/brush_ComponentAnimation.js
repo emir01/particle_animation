@@ -26,7 +26,7 @@
 				removeFromStrokesAfterDraw:true,
 
 				drawIt:function(ctx){
-					for (var i = this.components.length - 1; i >= 0; i--) {
+					for (var i = 0; i < this.components.length; i++) {
 						var comp = this.components[i];
 						comp.drawIt(ctx);
 					};
@@ -35,10 +35,24 @@
 				animateIt:function(){
 					var comps = this.components;
 
-					for (var i = comps.length - 1; i >= 0; i--) {
+					var core = comps[0];
+					var comp1 = comps[1];
+					var comp2 = comps[1];
+
+					for (var i = 0; i < comps.length; i++) {
 						var comp = comps[i];
+
 						if(comp.isAnimating){
-							comp.animateIt();
+							// specific animations here
+							if(i==1){
+								comp.animateIt(0.5, 0.5);
+							}
+							else if(i==2){
+								comp.animateIt(-0.5, -0.5);
+							}
+							else{
+								comp.animateIt();
+							}
 						}
 					};
 
@@ -69,10 +83,10 @@
 			// the stroke core will not be animated
 			strokeCore.isAnimating = false;
 
-			brushStroke.components.push(strokeCore);
+			brushStroke.components.push(strokeCore);		
 			brushStroke.components.push(strokeAddonOne);
 			brushStroke.components.push(strokeAddonTwo);
-
+			
 			return brushStroke;
 		};
 
@@ -86,11 +100,13 @@
 		var getBrushComponent = function(event){
 
 			// setup random draw invocation code
-			var invoke = "Rect"
+			var invoke = "Circle"
+			var dimensionFactor = 5;
 
 			// randomize the method invocation
 			if(Math.random() < 0.9){
-				invoke = "Circle";
+				invoke = "Rect";
+				dimensionFactor = 12;
 			}
 
 			var component = {
@@ -99,8 +115,8 @@
 				x:event.event.offsetX, 
 				y:event.event.offsetY,
 
-				w:Math.round(Math.random() * 5),
-				h:Math.round(Math.random() * 5),
+				w:Math.round(Math.random() * dimensionFactor),
+				h:Math.round(Math.random() * dimensionFactor),
 
 				fillStyle:'#'+(Math.random()*0xFFFFFF<<0).toString(16),
 
@@ -111,11 +127,11 @@
 				isAnimating:true,
 				animationFrames:10,
 
-				animateIt:function(){
+				animateIt:function(x, y){
 					var me = this;
 
-					me.y = me.y+0.2;
-					me.x = me.x-0.1;
+					me.y = me.y+y;
+					me.x = me.x+x;
 
 					me.animationFrames = me.animationFrames - 1;
 

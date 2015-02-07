@@ -93,7 +93,7 @@
 				if(e.isAnimating){
 					ctx = drawing.state.actx;
 				}
-
+				
 				e.drawIt(ctx);
 
 				// the entity is going to be removed from the draw pool
