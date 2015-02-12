@@ -15,47 +15,17 @@
 			Properties
 			============================================================
 		*/
+
 		var key_codes = {
 			Escape:27,
-			Two:50,
-			Three:51
+			One:49,
+			Two:50
 		};
 
-		/*
-			Define the entire scheme/control array that will be dynamicly
-			added on the UI.
-
-			The UI will be generated based on the given section
-		*/
-
-		var uiDefinition = [
-			// section definition
-			{
-				sectionName: "Main",
-
-				// section control definition
-				sectionControls: [
-					{ 
-						title:"Clear Canvas (Esc)",
-						keyCode:key_codes.Escape,
-						handler:ui_action_ClearCanvas_handler
-					}
-				]
-			},
-			// section definition
-			{
-				sectionName:"Brushes",
-
-				// section control definition
-				sectionControls: [
-					{
-						title:"Bla Canvas (Esc)",
-						keyCode:key_codes.Escape,
-						handler:ui_action_ClearCanvas_handler
-					}
-				]
-			}
-		];
+		var action_types = {
+			general:"general",
+			brush:"brush",
+		};
 
 		/*
 			============================================================
@@ -64,19 +34,60 @@
 		*/
 
 		var initUi = function(){
-			
-			//printBrushSelection();
+			drawUi();
 
 			setupKeyboardHandlers();
-
-			setupUIHandlers();
 		};
 
 		/*
 			============================================================
-			Keyboard handlers
+			UI Drawing
 			============================================================
 		*/
+
+		var drawUi = function(){
+			var $controls_wrapper = $("#controls-wrapper");
+
+			// draw the ui form the  configuration
+			 for (var i = 0; i < uiDefinition.length; i++) {
+			 	var section = uiDefinition[i];
+
+				// draw the section
+			 	var $section = $("<div></div>")
+			 		.addClass("controls-section");
+				
+			 	var $sectionTitle = $("<div></div>") 
+			 		.addClass("section-title")
+			 		.text(section.sectionName);
+
+			 	var $sectionActions = $("<div></div>")
+			 		.addClass("control-section-actions");
+
+			 	// Compose all the actions in the control section actions 
+			 	// wrapper
+			 	for (var j = 0; j < section.sectionControls.length; j++) {
+			 		var control = section.sectionControls[j];
+
+			 		var $button = $("<button></button>")
+			 			.addClass("action")
+			 			.text(control.title)
+			 			.on("click", control.handler);
+
+		 			if(control.type == action_types.brush){
+		 				$button.attr("alias", control.alias);
+		 			}
+
+			 		// add the button to the actions section wrapper
+			 		$sectionActions.append($button);
+			 	};
+
+			 	// do high level composition
+			 	$section.append($sectionTitle);
+			 	$section.append($sectionActions);
+
+			 	$controls_wrapper.append($section);
+			};
+		};
 
 		/*
 			============================================================
@@ -93,8 +104,6 @@
 
 				var keyCode = e.which;
 
-				var f = ui_action_ClearCanvas_handler;
-
 				// use underscore to get only the array of
 				// controls without the section definitions
 				var uiControls = _.chain(uiDefinition)
@@ -104,37 +113,15 @@
 				.flatten()
 				.value();
 
-				if(e.which == key_codes.Escape ){
-					ui_action_ClearCanvas_handler();
-				}
-
-				if(e.which == key_codes.Two ){
-					ui_action_brush_circles_handler();
-				}
-
-				if(e.which == key_codes.Three ){
-					ui_action_brush_squares_handler();
-				}
+				// find and call the handler in the array of uicontorls
+				for (var i = uiControls.length - 1; i >= 0; i--) {
+					var control = uiControls[i]
+					if(control.keyCode == keyCode){
+						// call the control handler
+						control.handler(e);
+					}
+				};
 			});
-		};
-
-
-		/*
-			============================================================
-			UI Handlers
-			============================================================
-		*/
-
-		var setupUIHandlers = function(){
-			// setup clear canvas handler
-			$("#ui_action_clearCanvas").on("click", ui_action_ClearCanvas_handler);
-
-			// setup circles brush
-			$("#ui_action_brush_circles").on("click", ui_action_brush_circles_handler);
-
-			// setup squares brush
-			$("#ui_action_brush_squares").on("click", ui_action_brush_squares_handler);
-
 		};
 
 		/*
@@ -149,17 +136,84 @@
 
 		var ui_action_brush_circles_handler = function(){
 			drawing.brushManager.SetActiveBrush(drawing.brushManager.BrushNames.color_splatter);
+			setActiveBrush(drawing.brushManager.BrushNames.color_splatter);
 		};
 
 		var ui_action_brush_squares_handler = function(){
 			drawing.brushManager.SetActiveBrush(drawing.brushManager.BrushNames.component_animated);	
+			setActiveBrush(drawing.brushManager.BrushNames.component_animated);
 		};
 
 		/*
 			============================================================
-			Private Utilities
+			UI Definition
 			============================================================
 		*/
+
+
+		/*
+			Define the entire scheme/control array that will be dynamicly
+			added on the UI.
+
+			The UI will be generated based on the given section
+		*/
+
+		var uiDefinition = [
+			// section definition
+			{
+				sectionName: "Main",
+
+				// section control definition
+				sectionControls: [
+					{ 
+						type:action_types.general,
+						title:"Clear Canvas (Esc)",
+						keyCode:key_codes.Escape,
+						handler:ui_action_ClearCanvas_handler
+					}
+				]
+			},
+			// section definition
+			{
+				sectionName:"Brushes",
+
+				// section control definition
+				sectionControls: [
+					{
+						type:action_types.brush,
+						alias:drawing.brushManager.BrushNames.color_splatter,
+						title:"Circle Brush (1)",
+						keyCode:key_codes.One,
+						handler:ui_action_brush_circles_handler
+					},
+					{
+						type:action_types.brush,
+						alias:drawing.brushManager.BrushNames.component_animated,
+						title:"Square Brush (2)",
+						keyCode:key_codes.Two,
+						handler:ui_action_brush_squares_handler
+					}
+				]
+			}
+		];
+
+		/*
+			============================================================
+			Utilities
+			============================================================
+		*/
+
+		/* Let the ui set a given rendered brush selectio action as 
+			the current active brush
+		*/
+		var setActiveBrush = function(brushAlias){
+			console.log("setting active brush for alias: "+ brushAlias);
+			$("button.active").removeClass("active");
+			var nowActiveButton = $("button[alias = '"+brushAlias+"']");
+
+			nowActiveButton.addClass("active");
+
+		};
 
 		/*
 			============================================================
@@ -167,8 +221,9 @@
 			============================================================
 		*/
 		return {
-			InitUi:initUi
-		}
+			InitUi:initUi,
 
+			SetActiveBrush:setActiveBrush
+		}
 	}();
 })(window.drawing = window.drawing || {} );

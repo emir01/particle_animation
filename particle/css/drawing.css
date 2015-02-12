@@ -55,7 +55,14 @@
 		}
 			
 			.action{
-
+				margin:3px;
+				font-size:10px;
 			}
+
+			.action.active{
+				color:#FF0000;
+			}
+
+
 
 

@@ -38,11 +38,14 @@
 	// draw/clear initial background canvas
 	drawing.draw.Clear(state.bctx);
 
-	// setup current brush
-	drawing.brushManager.SetActiveBrush(drawing.brushManager.BrushNames.component_animated);
-	
 	// hook up the UI
 	drawing.ui_core.InitUi();
+
+	// setup current brush
+	drawing.brushManager.SetActiveBrush(drawing.brushManager.BrushNames.color_splatter);
+
+	// highlight the currently active brush
+	drawing.ui_core.SetActiveBrush(drawing.brushManager.BrushNames.color_splatter);
 
 	drawing.engine.run();
 
