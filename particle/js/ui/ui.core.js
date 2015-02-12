@@ -16,10 +16,46 @@
 			============================================================
 		*/
 		var key_codes = {
-			One:49,
+			Escape:27,
 			Two:50,
 			Three:51
 		};
+
+		/*
+			Define the entire scheme/control array that will be dynamicly
+			added on the UI.
+
+			The UI will be generated based on the given section
+		*/
+
+		var uiDefinition = [
+			// section definition
+			{
+				sectionName: "Main",
+
+				// section control definition
+				sectionControls: [
+					{ 
+						title:"Clear Canvas (Esc)",
+						keyCode:key_codes.Escape,
+						handler:ui_action_ClearCanvas_handler
+					}
+				]
+			},
+			// section definition
+			{
+				sectionName:"Brushes",
+
+				// section control definition
+				sectionControls: [
+					{
+						title:"Bla Canvas (Esc)",
+						keyCode:key_codes.Escape,
+						handler:ui_action_ClearCanvas_handler
+					}
+				]
+			}
+		];
 
 		/*
 			============================================================
@@ -42,11 +78,33 @@
 			============================================================
 		*/
 
+		/*
+			============================================================
+			Keyboard handlers
+			============================================================
+		*/
+
 		var setupKeyboardHandlers = function(){
 			// hook the events on window
 			$(window).on("keydown",function(e){
 
-				if(e.which == key_codes.One ){
+				// need to check if the keycode is present in the array of
+				// event handlers in the UI array definition in the properties
+
+				var keyCode = e.which;
+
+				var f = ui_action_ClearCanvas_handler;
+
+				// use underscore to get only the array of
+				// controls without the section definitions
+				var uiControls = _.chain(uiDefinition)
+				.map(function(object){
+					return object.sectionControls;
+				})
+				.flatten()
+				.value();
+
+				if(e.which == key_codes.Escape ){
 					ui_action_ClearCanvas_handler();
 				}
 
